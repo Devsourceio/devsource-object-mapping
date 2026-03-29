@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DevSource.ObjectMapping.SourceGenerator/DevSource.ObjectMapping.SourceGenerator.csproj" />
+    <Project Path="src/DevSource.ObjectMapping/DevSource.ObjectMapping.csproj" />
+  </Folder>
+</Solution>
