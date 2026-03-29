@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalyzerDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Release Version="1.0.0">
+    <Diagnostics>
+      <Diagnostic id="DSM001" />
+      <Diagnostic id="DSM002" />
+      <Diagnostic id="DSM003" />
+      <Diagnostic id="DSM004" />
+      <Diagnostic id="DSM005" />
+      <Diagnostic id="DSM006" />
+      <Diagnostic id="DSM007" />
+      <Diagnostic id="DSM008" />
+      <Diagnostic id="DSM009" />
+    </Diagnostics>
+  </Release>
+</AnalyzerDocument>
