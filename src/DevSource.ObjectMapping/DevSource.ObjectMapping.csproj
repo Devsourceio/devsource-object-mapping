@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Analyzer Include="Analyzers\DevSource.ObjectMapping.SourceGenerator.dll" />
+  </ItemGroup>
+
 </Project>
