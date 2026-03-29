@@ -3,4 +3,7 @@
     <Project Path="src/DevSource.ObjectMapping.SourceGenerator/DevSource.ObjectMapping.SourceGenerator.csproj" />
     <Project Path="src/DevSource.ObjectMapping/DevSource.ObjectMapping.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DevSource.ObjectMapping.Tests/DevSource.ObjectMapping.Tests.csproj" />
+  </Folder>
 </Solution>
