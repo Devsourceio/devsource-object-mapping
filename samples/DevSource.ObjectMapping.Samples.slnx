@@ -2,5 +2,6 @@
   <Project Path="DevSource.ObjectMapping.Sample.Conventions/DevSource.ObjectMapping.Sample.Conventions.csproj" />
   <Project Path="DevSource.ObjectMapping.Sample.Customization/DevSource.ObjectMapping.Sample.Customization.csproj" />
   <Project Path="DevSource.ObjectMapping.Sample.NestedCollections/DevSource.ObjectMapping.Sample.NestedCollections.csproj" />
+  <Project Path="DevSource.ObjectMapping.Sample.RootCollections/DevSource.ObjectMapping.Sample.RootCollections.csproj" />
   <Project Path="DevSource.ObjectMapping.Sample/DevSource.ObjectMapping.Sample.csproj" />
 </Solution>
