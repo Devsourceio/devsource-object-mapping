@@ -11,10 +11,20 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageTags>#mapping; #sourcegenerator; #source-generator; #object-mapping</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <Analyzer Include="Analyzers\DevSource.ObjectMapping.SourceGenerator.dll" />
+    <ProjectReference Include="..\DevSource.ObjectMapping.SourceGenerator\DevSource.ObjectMapping.SourceGenerator.csproj"
+                      ReferenceOutputAssembly="false"
+                      PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\DevSource.ObjectMapping.SourceGenerator\bin\$(Configuration)\netstandard2.0\DevSource.ObjectMapping.SourceGenerator.dll"
+          Pack="true"
+          PackagePath="analyzers/dotnet/cs"
+          Visible="false" />
   </ItemGroup>
 
 </Project>
