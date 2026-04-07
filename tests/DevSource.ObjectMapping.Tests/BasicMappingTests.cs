@@ -225,6 +225,61 @@ public class BasicMappingTests
 
         Assert.Equal("Direct", dto.CustomerName);
     }
+
+    [Fact]
+    public void RootListMapping_Works()
+    {
+        var query = new GetUser
+        {
+            Users =
+            [
+                new User { Id = 1, Name = "Maria", Email = "maria@example.com", Age = 30 },
+                new User { Id = 2, Name = "Joao", Email = "joao@example.com", Age = 25 }
+            ]
+        };
+
+        var dto = query.ToListOfUserDto()!;
+
+        Assert.Equal(2, dto.Count);
+        Assert.Equal("Maria", dto[0].Name);
+        Assert.Equal("joao@example.com", dto[1].Email);
+        Assert.Equal(25, dto[1].Age);
+    }
+
+    [Fact]
+    public void RootEnumerableMapping_Works()
+    {
+        var query = new GetUsersEnumerable
+        {
+            Users =
+            [
+                new User { Id = 7, Name = "Ana", Email = "ana@example.com", Age = 18 }
+            ]
+        };
+
+        var dto = query.ToEnumerableOfUserDto()!.ToList();
+
+        Assert.Single(dto);
+        Assert.Equal("Ana", dto[0].Name);
+        Assert.Equal(18, dto[0].Age);
+    }
+
+    [Fact]
+    public void RootCollectionMapping_Works()
+    {
+        var query = new GetUsersCollection
+        {
+            Users =
+            [
+                new User { Id = 9, Name = "Carlos", Email = "carlos@example.com", Age = 41 }
+            ]
+        };
+
+        var dto = query.ToCollectionOfUserDto()!;
+
+        Assert.Single(dto);
+        Assert.Equal("Carlos", dto.First().Name);
+    }
 }
 
 public class UserWithAddress : IMapTo<UserWithAddressDto>
@@ -375,6 +430,21 @@ public class CustomerInfo
 {
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+}
+
+public record GetUser : IMapTo<List<UserDto>>
+{
+    public List<User> Users { get; init; } = [];
+}
+
+public record GetUsersEnumerable : IMapTo<IEnumerable<UserDto>>
+{
+    public IEnumerable<User> Users { get; init; } = [];
+}
+
+public record GetUsersCollection : IMapTo<ICollection<UserDto>>
+{
+    public ICollection<User> Users { get; init; } = [];
 }
 
 #pragma warning restore DSM009
