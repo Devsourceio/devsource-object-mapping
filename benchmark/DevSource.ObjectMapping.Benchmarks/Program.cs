@@ -22,6 +22,9 @@ public class MappingBenchmark
     }
 
     private readonly User _simpleUser;
+    private readonly GetUsersList _usersListQuery;
+    private readonly GetUsersEnumerable _usersEnumerableQuery;
+    private readonly GetUsersCollection _usersCollectionQuery;
     private readonly UserWithNested _userWithNested;
     private readonly UserWithCollection _userWithCollection;
     private readonly UserWithDictionary _userWithDictionary;
@@ -32,6 +35,9 @@ public class MappingBenchmark
     public MappingBenchmark()
     {
         _simpleUser = CreateSimpleUser();
+        _usersListQuery = CreateUsersListQuery();
+        _usersEnumerableQuery = CreateUsersEnumerableQuery();
+        _usersCollectionQuery = CreateUsersCollectionQuery();
         _userWithNested = CreateUserWithNested();
         _userWithCollection = CreateUserWithCollection();
         _userWithDictionary = CreateUserWithDictionary();
@@ -51,6 +57,42 @@ public class MappingBenchmark
 
     [Benchmark]
     public UserDto AutoMapper_Simple() => _autoMapper.Map<UserDto>(_simpleUser);
+
+    [Benchmark]
+    public List<UserDto> Manual_RootList() => ManualMapRootList(_usersListQuery);
+
+    [Benchmark]
+    public List<UserDto> DevSourceObjectMapping_RootList() => _usersListQuery.ToListOfUserDto()!;
+
+    [Benchmark]
+    public List<UserDto> Mapster_RootList() => _usersListQuery.Users.Adapt<List<UserDto>>();
+
+    [Benchmark]
+    public List<UserDto> AutoMapper_RootList() => _autoMapper.Map<List<UserDto>>(_usersListQuery.Users);
+
+    [Benchmark]
+    public List<UserDto> Manual_RootEnumerable() => ManualMapRootEnumerable(_usersEnumerableQuery).ToList();
+
+    [Benchmark]
+    public List<UserDto> DevSourceObjectMapping_RootEnumerable() => _usersEnumerableQuery.ToEnumerableOfUserDto()!.ToList();
+
+    [Benchmark]
+    public List<UserDto> Mapster_RootEnumerable() => _usersEnumerableQuery.Users.Adapt<List<UserDto>>();
+
+    [Benchmark]
+    public List<UserDto> AutoMapper_RootEnumerable() => _autoMapper.Map<IEnumerable<UserDto>>(_usersEnumerableQuery.Users).ToList();
+
+    [Benchmark]
+    public ICollection<UserDto> Manual_RootCollection() => ManualMapRootCollection(_usersCollectionQuery);
+
+    [Benchmark]
+    public ICollection<UserDto> DevSourceObjectMapping_RootCollection() => _usersCollectionQuery.ToCollectionOfUserDto()!;
+
+    [Benchmark]
+    public ICollection<UserDto> Mapster_RootCollection() => _usersCollectionQuery.Users.Adapt<List<UserDto>>();
+
+    [Benchmark]
+    public ICollection<UserDto> AutoMapper_RootCollection() => _autoMapper.Map<ICollection<UserDto>>(_usersCollectionQuery.Users);
 
     [Benchmark]
     public UserWithNestedDto Manual_Nested() => ManualMapNested(_userWithNested);
@@ -136,6 +178,40 @@ public class MappingBenchmark
                 ZipCode = "12345"
             }
         };
+    }
+
+    private static GetUsersList CreateUsersListQuery()
+    {
+        return new GetUsersList
+        {
+            Users = CreateRootUsers()
+        };
+    }
+
+    private static GetUsersEnumerable CreateUsersEnumerableQuery()
+    {
+        return new GetUsersEnumerable
+        {
+            Users = CreateRootUsers()
+        };
+    }
+
+    private static GetUsersCollection CreateUsersCollectionQuery()
+    {
+        return new GetUsersCollection
+        {
+            Users = CreateRootUsers()
+        };
+    }
+
+    private static List<User> CreateRootUsers()
+    {
+        return
+        [
+            new() { Id = 1, Name = "Maria", Email = "maria@example.com", Age = 30 },
+            new() { Id = 2, Name = "Joao", Email = "joao@example.com", Age = 25 },
+            new() { Id = 3, Name = "Ana", Email = "ana@example.com", Age = 18 }
+        ];
     }
 
     private static UserWithCollection CreateUserWithCollection()
@@ -251,6 +327,33 @@ public class MappingBenchmark
                     ZipCode = source.Address.ZipCode
                 }
         };
+    }
+
+    private static List<UserDto> ManualMapRootList(GetUsersList source)
+    {
+        var result = new List<UserDto>(source.Users.Count);
+        foreach (var user in source.Users)
+            result.Add(ManualMapSimple(user));
+
+        return result;
+    }
+
+    private static IEnumerable<UserDto> ManualMapRootEnumerable(GetUsersEnumerable source)
+    {
+        var result = new List<UserDto>();
+        foreach (var user in source.Users)
+            result.Add(ManualMapSimple(user));
+
+        return result;
+    }
+
+    private static ICollection<UserDto> ManualMapRootCollection(GetUsersCollection source)
+    {
+        var result = new List<UserDto>();
+        foreach (var user in source.Users)
+            result.Add(ManualMapSimple(user));
+
+        return result;
     }
 
     private static UserWithCollectionDto ManualMapCollection(UserWithCollection source)

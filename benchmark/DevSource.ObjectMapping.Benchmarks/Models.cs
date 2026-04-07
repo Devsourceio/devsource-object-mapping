@@ -19,6 +19,21 @@ public class UserDto
     public int Age { get; set; }
 }
 
+public record GetUsersList : IMapTo<List<UserDto>>
+{
+    public List<User> Users { get; init; } = [];
+}
+
+public record GetUsersEnumerable : IMapTo<IEnumerable<UserDto>>
+{
+    public IEnumerable<User> Users { get; init; } = [];
+}
+
+public record GetUsersCollection : IMapTo<ICollection<UserDto>>
+{
+    public ICollection<User> Users { get; init; } = [];
+}
+
 public class Address : IMapTo<AddressDto>
 {
     public string Street { get; set; } = string.Empty;
