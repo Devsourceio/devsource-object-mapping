@@ -4,6 +4,13 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>DevSource.ObjectMapping</Title>
+    <Description>DevSourceObjectMapping is an object mapping library for .NET that aims to replace the traditional AutoMapper, eliminating the use of Reflection in favor of Source Generators (Roslyn).</Description>
+    <Copyright>DevSource Team</Copyright>
+    <PackageProjectUrl>https://github.com/Devsourceio/devsource-object-mapping</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageTags>#mapping; #sourcegenerator; #source-generator; #object-mapping</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

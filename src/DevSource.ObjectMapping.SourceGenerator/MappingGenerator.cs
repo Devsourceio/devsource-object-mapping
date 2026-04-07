@@ -45,6 +45,19 @@ public partial class MappingGenerator : IIncrementalGenerator
             return;
 
         var (sourceType, targetType, syntaxNode, compilation, hasOnBeforeMap, hasOnAfterMap) = mappingInfo;
+
+        if (TryGetRootCollectionTarget(targetType, out var rootTargetElementType))
+        {
+            if (!TryGetRootCollectionMapping(context, compilation, sourceType, targetType, syntaxNode, out var rootCollectionMapping))
+                return;
+
+            var rootSourceCode = GenerateRootCollectionMappingCode(sourceType, targetType, rootCollectionMapping);
+            var rootMethodName = GetRootCollectionMethodName(targetType, rootTargetElementType);
+            var rootFileName = $"{sourceType.Name}{rootMethodName}.g.cs";
+            context.AddSource(rootFileName, rootSourceCode);
+            return;
+        }
+
         var sourceProperties = GetPublicProperties(sourceType);
         var targetProperties = GetPublicProperties(targetType);
         var propertyMap = MatchProperties(context, compilation, sourceType, targetType, sourceProperties, targetProperties, syntaxNode);

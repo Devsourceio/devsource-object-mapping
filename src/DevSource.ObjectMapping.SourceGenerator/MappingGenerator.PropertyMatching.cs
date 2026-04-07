@@ -164,15 +164,28 @@ public partial class MappingGenerator
     private static void ReportDiagnostic(
         SourceProductionContext context,
         DiagnosticDescriptor descriptor,
-        IPropertySymbol property,
-        TypeDeclarationSyntax syntaxNode,
+        Location location,
         params object[] messageArgs)
     {
         var diagnostic = Diagnostic.Create(
             descriptor,
-            property.Locations.FirstOrDefault() ?? syntaxNode.GetLocation(),
+            location,
             messageArgs);
         context.ReportDiagnostic(diagnostic);
+    }
+
+    private static void ReportDiagnostic(
+        SourceProductionContext context,
+        DiagnosticDescriptor descriptor,
+        IPropertySymbol property,
+        TypeDeclarationSyntax syntaxNode,
+        params object[] messageArgs)
+    {
+        ReportDiagnostic(
+            context,
+            descriptor,
+            property.Locations.FirstOrDefault() ?? syntaxNode.GetLocation(),
+            messageArgs);
     }
 
     private static ImmutableArray<FlatteningCandidate> FindFlatteningCandidates(
